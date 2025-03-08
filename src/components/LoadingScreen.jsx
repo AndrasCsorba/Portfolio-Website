@@ -1,8 +1,8 @@
-import { use } from "react";
+import { useEffect, useState } from "react";
 
-export const LoadingScreen = () => {
-  const [text, setText] = useState;
-  const fullText = "<Helolo world />";
+export const LoadingScreen = ({ onComplete }) => {
+  const [text, setText] = useState("");
+  const fullText = "<Hello world />";
 
   useEffect(() => {
     let index = 0;
@@ -12,10 +12,13 @@ export const LoadingScreen = () => {
 
       if (index > fullText.length) {
         clearInterval(interval);
+        setTimeout(() => {
+          onComplete();
+        }, 1000);
       }
     }, 100);
     return () => clearInterval(interval);
-  });
+  }, [onComplete]);
 
   return (
     <div className="fixed inset-0 z-50 bg-black text-gray-100 flex flex-col items-center justify-center">
